@@ -1,0 +1,14 @@
+for i in *.com
+do
+
+# delete Bq line, set proc=16, delete constraints and set new ones
+
+awk '!/Bq/' $i > temp && mv temp $i
+awk '{ sub(/=8$/, "=16", $1) }1' $i > temp && mv temp $i
+awk '{ sub(/16GB$/, "32GB", $2) }1' $i > temp && mv temp $i
+sed -ie '29,31d' $i
+sed -e '29s/$/A 1 2 19 S 16 5.000000/' $i > temp && mv temp $i 
+sed -e '30s/$/B 2 19 F/' $i > temp && mv temp $i
+
+done
+
